@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function increaseLikeCounter(toyId, newLikes) {
     console.log(toyId, newLikes)
-    fetch('http://localhost:3000/toys', {
+    fetch(`http://localhost:3000/toys/${toyId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -73,6 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
         likes: newLikes
       })
     })
+    .then(resp => resp.json())
+    .then()
+    .catch( () => alert('Something went wrong...'))
   }
 
   addBtn.addEventListener("click", () => {
