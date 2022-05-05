@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
     toyLikes.textContent = `${toyObj.likes} Likes`
     likeButton.textContent = 'Like ♥️'
 
+    likeButton.addEventListener('click', () => {
+
+    })
+
     toyCard.appendChild(toyHeader)
     toyCard.appendChild(toyImage)
     toyCard.appendChild(toyLikes)
@@ -67,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   newToyForm.addEventListener('submit', e => {
     e.preventDefault()
     createNewToy()
+    newToyForm.reset()
   })
 
 })
