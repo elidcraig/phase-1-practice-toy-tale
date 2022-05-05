@@ -10,8 +10,24 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(resp => resp.json())
     .then(toysArr => toysArr.forEach(toyObj => renderOneCard(toyObj)))
 
-  function createNewToy(toyObj) {
-    
+  function createNewToy() {
+    const newToyObj =  {
+      name: newToyForm.name.value,
+      image: newToyForm.image.value,
+      likes: 0
+    }
+
+    fetch('http://localhost:3000/toys', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(newToyObj)
+    })
+    .then(resp => resp.json())
+    .then( () => renderOneCard(newToyObj))
+    .catch( () => alert('There was a problem processing your request'))
   }
 
   function renderOneCard(toyObj) {
@@ -40,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   addBtn.addEventListener("click", () => {
-    // hide & seek with the form
     addToy = !addToy;
     if (addToy) {
       toyFormContainer.style.display = "block";
@@ -51,25 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   newToyForm.addEventListener('submit', e => {
     e.preventDefault()
-    const newToyObj =  {
-      name: newToyForm.name.value,
-      image: newToyForm.image.value,
-      likes: 0
-    }
-
-    fetch('http://localhost:3000/toys', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify(newToyObj)
-    })
-    .then(resp => resp.json())
-    .then(data => console.log('Success!' + data))
-    .catch(data => console.alert('Fail :(' + data))
-
-    renderOneCard(newToyObj)
+    createNewToy()
   })
 
 })
