@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(resp => resp.json())
     .then(toysArr => toysArr.forEach(toyObj => renderOneCard(toyObj)))
 
-  // POST request here
+  function createNewToy(toyObj) {
+    
+  }
 
   function renderOneCard(toyObj) {
     
@@ -49,13 +51,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   newToyForm.addEventListener('submit', e => {
     e.preventDefault()
-    console.log(newToyForm.name)
     const newToyObj =  {
       name: newToyForm.name.value,
       image: newToyForm.image.value,
       likes: 0
     }
+
+    fetch('http://localhost:3000/toys', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(newToyObj)
+    })
+    .then(resp => resp.json())
+    .then(data => console.log('Success!' + data))
+    .catch(data => console.alert('Fail :(' + data))
+
     renderOneCard(newToyObj)
   })
 
 })
+
