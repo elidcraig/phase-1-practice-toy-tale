@@ -1,6 +1,7 @@
 let addToy = false;
 
 document.addEventListener("DOMContentLoaded", () => {
+  const newToyForm = document.querySelector('.add-toy-form')
   const addBtn = document.querySelector("#new-toy-btn");
   const toyFormContainer = document.querySelector(".container");
   const toyCollectionContainer = document.querySelector('#toy-collection')
@@ -8,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch('http://localhost:3000/toys')
     .then(resp => resp.json())
     .then(toysArr => toysArr.forEach(toyObj => renderOneCard(toyObj)))
+
+  // POST request here
 
   function renderOneCard(toyObj) {
     
@@ -42,6 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       toyFormContainer.style.display = "none";
     }
-  });
+  })
 
-});
+  newToyForm.addEventListener('submit', e => {
+    e.preventDefault()
+    console.log(newToyForm.name)
+    const newToyObj =  {
+      name: newToyForm.name.value,
+      image: newToyForm.image.value,
+      likes: 0
+    }
+    renderOneCard(newToyObj)
+  })
+
+})
