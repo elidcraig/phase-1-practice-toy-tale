@@ -48,8 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
     toyLikes.textContent = `${toyObj.likes} Likes`
     likeButton.textContent = 'Like ♥️'
 
-    likeButton.addEventListener('click', () => {
-
+    likeButton.addEventListener('click', e => {
+      toyId = e.target.id
+      let likesCounter = toyObj.likes + 1
+      increaseLikeCounter(toyId, likesCounter)
     })
 
     toyCard.appendChild(toyHeader)
@@ -57,6 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
     toyCard.appendChild(toyLikes)
     toyCard.appendChild(likeButton)
     toyCollectionContainer.appendChild(toyCard)
+  }
+
+  function increaseLikeCounter(toyId, newLikes) {
+    console.log(toyId, newLikes)
+    fetch('http://localhost:3000/toys', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        likes: newLikes
+      })
+    })
   }
 
   addBtn.addEventListener("click", () => {
